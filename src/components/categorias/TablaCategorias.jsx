@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 
 const TablaCategorias = ({ categorias }) => {
+
   return (
     <Table striped bordered hover responsive>
       <thead>
@@ -20,6 +21,6 @@ const TablaCategorias = ({ categorias }) => {
       </tbody>
     </Table>
   );
-};
+}
 
 export default TablaCategorias;

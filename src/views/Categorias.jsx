@@ -32,6 +32,6 @@ const Categorias = () => {
       <TablaCategorias categorias={categorias} />
     </Container>
   );
-};
+}
 
 export default Categorias;
