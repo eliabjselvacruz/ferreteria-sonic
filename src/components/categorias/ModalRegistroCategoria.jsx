@@ -6,7 +6,7 @@ const ModalRegistroCategoria = ({
   setMostrarModal,
   nuevaCategoria,
   manejoCambioInput,
-  agregarCategoria,
+  agregarCategoria
 }) => {
   return (
     <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
