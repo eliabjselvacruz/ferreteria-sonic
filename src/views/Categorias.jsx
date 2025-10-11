@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { db } from "../database/firebaseconfig";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc, deleteDoc } from "firebase/firestore";
 import TablaCategorias from "../components/categorias/TablaCategorias";
 import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria";
+import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
 
 const Categorias = () => {
 
@@ -16,6 +17,9 @@ const Categorias = () => {
     nombre: "",
     descripcion: "",
   });
+
+  const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
+  const [categoriaAEliminar, setCategoriaAEliminar] = useState(null);
 
   // Manejador de cambios en inputs del formulario de nueva categoría
   const manejoCambioInput = (e) => {
@@ -65,6 +69,29 @@ const Categorias = () => {
     }
   };
 
+  // Función para manejar el clic en el botón "Eliminar"
+  const manejarEliminar = (categoria) => {
+    setCategoriaAEliminar(categoria);
+    setMostrarModalEliminar(true);
+  };
+
+  // Función para eliminar una categoría
+  const eliminarCategoria = async () => {
+    if (!categoriaAEliminar) return;
+
+    try {
+      const categoriaRef = doc(db, "categorias", categoriaAEliminar.id);
+      await deleteDoc(categoriaRef);
+      cargarCategorias();
+      console.log("Categoría eliminada exitosamente.");
+      setMostrarModalEliminar(false);
+      setCategoriaAEliminar(null);
+    } catch (error) {
+      console.error("Error al eliminar la categoría:", error);
+      alert("Error al eliminar la categoría: " + error.message);
+    }
+  };
+
   useEffect(() => {
     cargarCategorias();
   }, []);
@@ -84,7 +111,10 @@ const Categorias = () => {
         </Col>
       </Row>
 
-      <TablaCategorias categorias={categorias} />
+      <TablaCategorias 
+        categorias={categorias}
+        manejarEliminar={manejarEliminar}
+      />
 
       <ModalRegistroCategoria
         mostrarModal={mostrarModal}
@@ -92,6 +122,14 @@ const Categorias = () => {
         nuevaCategoria={nuevaCategoria}
         manejoCambioInput={manejoCambioInput}
         agregarCategoria={agregarCategoria}
+      />
+
+      <ModalEliminacion
+      Categoria
+        mostrarModalEliminar={mostrarModalEliminar}
+        setMostrarModalEliminar={setMostrarModalEliminar}
+        categoriaAEliminar={categoriaAEliminar}
+        eliminarCategoria={eliminarCategoria}
       />
 
     </Container>
