@@ -1,6 +1,5 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
-
 const TablaCategorias = ({ categorias, manejarEliminar }) => {
 
   return (

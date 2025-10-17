@@ -124,8 +124,7 @@ const Categorias = () => {
         agregarCategoria={agregarCategoria}
       />
 
-      <ModalEliminacion
-      Categoria
+      <ModalEliminacionCategoria
         mostrarModalEliminar={mostrarModalEliminar}
         setMostrarModalEliminar={setMostrarModalEliminar}
         categoriaAEliminar={categoriaAEliminar}
