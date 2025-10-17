@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { db } from "../database/firebaseconfig";
-import { collection, getDocs, addDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import TablaCategorias from "../components/categorias/TablaCategorias";
 import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria";
 import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
+import ModalEdicionCategoria from "../components/categorias/ModalEdicionCategoria";
 
 const Categorias = () => {
 
@@ -20,6 +21,49 @@ const Categorias = () => {
 
   const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
   const [categoriaAEliminar, setCategoriaAEliminar] = useState(null);
+
+  // Estado para el modal de edición
+  const [mostrarModalEditar, setMostrarModalEditar] = useState(false);
+  const [categoriaEditada, setCategoriaEditada] = useState(null);
+
+  // Manejador de cambios en inputs del formulario de edición
+  const manejoCambioInputEditar = (e) => {
+    const { name, value } = e.target;
+    setCategoriaEditada((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Función para abrir el modal de edición con datos prellenados
+  const manejarEditar = (categoria) => {
+    setCategoriaEditada({ ...categoria });
+    setMostrarModalEditar(true);
+  };
+
+  // Función para actualizar una categoría existente
+  const editarCategoria = async () => {
+    if (!categoriaEditada?.nombre || !categoriaEditada?.descripcion) {
+      alert("Por favor, completa todos los campos antes de actualizar.");
+      return;
+    }
+
+    setMostrarModalEditar(false);
+
+    try {
+      const categoriaRef = doc(db, "categorias", categoriaEditada.id);
+      await updateDoc(categoriaRef, {
+        nombre: categoriaEditada.nombre,
+        descripcion: categoriaEditada.descripcion,
+      });
+      cargarCategorias();
+      console.log("Categoría actualizada exitosamente.");
+      setCategoriaEditada(null);
+    } catch (error) {
+      console.error("Error al actualizar la categoría:", error);
+      alert("Error al actualizar la categoría: " + error.message);
+    }
+  };
 
   // Manejador de cambios en inputs del formulario de nueva categoría
   const manejoCambioInput = (e) => {
@@ -114,6 +158,7 @@ const Categorias = () => {
       <TablaCategorias 
         categorias={categorias}
         manejarEliminar={manejarEliminar}
+        manejarEditar={manejarEditar}
       />
 
       <ModalRegistroCategoria
@@ -130,6 +175,15 @@ const Categorias = () => {
         categoriaAEliminar={categoriaAEliminar}
         eliminarCategoria={eliminarCategoria}
       />
+
+      <ModalEdicionCategoria
+        mostrarModalEditar={mostrarModalEditar}
+        setMostrarModalEditar={setMostrarModalEditar}
+        categoriaEditada={categoriaEditada}
+        manejoCambioInputEditar={manejoCambioInputEditar}
+        editarCategoria={editarCategoria}
+      />
+
 
     </Container>
   );
