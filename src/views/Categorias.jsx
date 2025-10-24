@@ -5,11 +5,15 @@ import { collection, getDocs, addDoc, doc, deleteDoc } from "firebase/firestore"
 import TablaCategorias from "../components/categorias/TablaCategorias";
 import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria";
 import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
+import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 
 const Categorias = () => {
 
   const [categorias, setCategorias] = useState([]);
   const categoriasCollection = collection(db, "categorias");
+
+  const [categoriasFiltradas, setCategoriasFiltradas] = useState([]);
+  const [textoBusqueda, setTextoBusqueda] = useState("");
 
   // Estados para manejo del modal de registro
   const [mostrarModal, setMostrarModal] = useState(false);
@@ -63,6 +67,7 @@ const Categorias = () => {
         ...doc.data(),
       }));
       setCategorias(datosCategorias);
+      setCategoriasFiltradas(datosCategorias);
       console.log("Categorías cargadas desde Firestore:", datosCategorias);
     } catch (error) {
       console.error("Error al cargar categorías:", error);
@@ -96,6 +101,19 @@ const Categorias = () => {
     cargarCategorias();
   }, []);
 
+  const manejarCambioBusqueda = (e) => {
+    const texto = e.target.value.toLowerCase();
+    setTextoBusqueda(texto);
+
+    const filtradas = categorias.filter(
+      (categoria) =>
+        categoria.nombre.toLowerCase().includes(texto) ||
+        categoria.descripcion.toLowerCase().includes(texto)
+    );
+    setCategoriasFiltradas(filtradas);
+  };
+
+
   return (
     <Container className="mt-4">
       <h4>Gestión de Categorías</h4>
@@ -109,10 +127,16 @@ const Categorias = () => {
             Agregar categoría
           </Button>
         </Col>
+        <Col lg={5} md={8} sm={8} xs={7}>
+          <CuadroBusquedas
+            textoBusqueda={textoBusqueda}
+            manejarCambioBusqueda={manejarCambioBusqueda}
+          />
+        </Col>
       </Row>
 
       <TablaCategorias 
-        categorias={categorias}
+        categorias={categoriasFiltradas}
         manejarEliminar={manejarEliminar}
       />
 
