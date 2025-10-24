@@ -1,6 +1,7 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
-const TablaCategorias = ({ categorias, manejarEliminar }) => {
+
+const TablaCategorias = ({ categorias, manejarEliminar, manejarEditar }) => {
 
   return (
     <Table striped bordered hover responsive>
@@ -17,6 +18,14 @@ const TablaCategorias = ({ categorias, manejarEliminar }) => {
             <td>{categoria.nombre}</td>
             <td>{categoria.descripcion}</td>
             <td>
+              <Button
+                variant="outline-warning"
+                size="sm"
+                className="me-1"
+                onClick={() => manejarEditar(categoria)}
+              >
+                <i className="bi bi-pencil"></i>
+              </Button>
               <Button
                 variant="outline-danger"
                 size="sm"
