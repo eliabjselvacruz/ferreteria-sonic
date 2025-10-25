@@ -5,11 +5,9 @@ import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from "firebase
 import TablaCategorias from "../components/categorias/TablaCategorias";
 import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria";
 import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
-<<<<<<< HEAD
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
-=======
 import ModalEdicionCategoria from "../components/categorias/ModalEdicionCategoria";
->>>>>>> 494a421166cb95e3db056a6751f4d33bef04d0e0
+
 
 const Categorias = () => {
 
