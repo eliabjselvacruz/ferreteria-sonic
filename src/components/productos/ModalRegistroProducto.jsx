@@ -9,6 +9,31 @@ const ModalRegistroProducto = ({
   agregarProducto,
   categorias,
 }) => {
+
+  // Función para manejar la selección de imagen
+  const manejarImagen = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validar tamaño (1MB = 1,048,576 bytes)
+      if (file.size > 1048576) {
+        alert("La imagen no debe exceder 1MB.");
+        e.target.value = null; // Limpiar el input
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        manejoCambioInput({
+          target: {
+            name: "imagen",
+            value: reader.result, // Base64 string
+          },
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+
   return (
     <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
       <Modal.Header closeButton>
@@ -75,6 +100,22 @@ const ModalRegistroProducto = ({
               ))}
             </Form.Select>
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Imagen</Form.Label>
+            <Form.Control
+              type="file"
+              accept="image/*"
+              onChange={manejarImagen}
+            />
+            {nuevoProducto.imagen && (
+              <img
+                src={nuevoProducto.imagen}
+                alt="Vista previa"
+                style={{ width: "100px", height: "100px", objectFit: "cover", marginTop: "10px" }}
+              />
+            )}
+          </Form.Group>
+
         </Form>
       </Modal.Body>
       <Modal.Footer>

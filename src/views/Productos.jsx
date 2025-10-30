@@ -24,6 +24,7 @@ const Productos = () => {
     precio: null,
     stock: null,
     categoria: "",
+    imagen: ""
   });
 
   const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
@@ -69,6 +70,7 @@ const Productos = () => {
         precio: productoEditado.precio,
         stock: productoEditado.stock,
         categoria: productoEditado.categoria,
+        imagen: productoEditado.imagen
       });
       cargarProductos();
       console.log("Producto actualizado exitosamente.");
@@ -113,6 +115,7 @@ const Productos = () => {
         precio: null,
         stock: null,
         categoria: "",
+        imagen: ""
       });
       cargarProductos();
       console.log("Producto agregado exitosamente.");
@@ -215,12 +218,14 @@ const Productos = () => {
           />
         </Col>
       </Row>
+
       <TablaProductos
         productos={productosFiltrados}
         categorias={categorias}
         manejarEliminar={manejarEliminar}
         manejarEditar={manejarEditar}
       />
+
       <ModalRegistroProducto
         mostrarModal={mostrarModal}
         setMostrarModal={setMostrarModal}
@@ -229,12 +234,14 @@ const Productos = () => {
         agregarProducto={agregarProducto}
         categorias={categorias}
       />
+
       <ModalEliminacionProducto
         mostrarModalEliminar={mostrarModalEliminar}
         setMostrarModalEliminar={setMostrarModalEliminar}
         productoAEliminar={productoAEliminar}
         eliminarProducto={eliminarProducto}
       />
+
       <ModalEdicionProducto
         mostrarModalEditar={mostrarModalEditar}
         setMostrarModalEditar={setMostrarModalEditar}
