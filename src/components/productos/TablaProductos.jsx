@@ -33,7 +33,7 @@ const TablaProductos = ({ productos, categorias, manejarEliminar, manejarEditar 
               </td>
               <td>{producto.nombre}</td>
               <td>{producto.descripcion}</td>
-              <td>${producto.precio}</td>
+              <td>C${producto.precio}</td>
               <td>{producto.stock}</td>
               <td>{nombreCat}</td>
               <td>
