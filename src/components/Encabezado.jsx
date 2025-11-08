@@ -51,6 +51,7 @@ const Encabezado = () => {
               <Nav.Link onClick={() => manejarNavegacion("/productos")}>Productos</Nav.Link>
               <Nav.Link onClick={() => manejarNavegacion("/catalogo")}>Catálogo</Nav.Link>
               <Nav.Link onClick={() => manejarNavegacion("/empleados")}>Empleados</Nav.Link>
+              <Nav.Link onClick={() => manejarNavegacion("/estadisticas")}>Estadísticas</Nav.Link>
             </Nav>
           </Offcanvas.Body>
 
