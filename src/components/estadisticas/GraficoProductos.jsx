@@ -45,7 +45,7 @@ const GraficoProductos = ({ nombres, precios }) => {
   };
 
   return (
-    <div style={{ width: "100%", height: "400px" }}> {/* Altura fija para el contenedor */}
+    <div style={{ width: "100%", height: "400px" }}> 
       <Card style={{ height: "100%" }}>
         <Card.Body>
           <Card.Title>Gráfico Productos</Card.Title>

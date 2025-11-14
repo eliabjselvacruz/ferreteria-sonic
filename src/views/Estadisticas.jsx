@@ -1,4 +1,3 @@
-// src/views/Graficos.jsx
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { collection, onSnapshot } from 'firebase/firestore';
@@ -30,11 +29,10 @@ const Estadisticas = () => {
   const precios = productos.map((producto) => parseFloat(producto.precio));
 
   return (
-    <Container className="mt-5">
-      <br />
+    <Container className="mt-2">
       <h4>Estadísticas</h4>
       <Row className="mt-4">
-        <Col xs={12} sm={12} md={12} lg={6} className="mb-4">    
+        <Col xs={12} sm={12} md={12} lg={8} className="mb-4">    
           <GraficoProductos nombres={nombres} precios={precios} />
         </Col>
       </Row>
